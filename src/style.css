@@ -1,0 +1,316 @@
+/* ============================================
+   VILLAGE CONNECT - MALAWI
+   Color Scheme:
+   - Malawi Green: #1E824C
+   - Sunrise Yellow: #F7CA18
+   - Lake Blue: #3498DB
+   - Background: #F5F5F0
+   - Text: #2C3E2F
+   ============================================ */
+
+:root {
+    --primary-green: #1E824C;
+    --secondary-yellow: #F7CA18;
+    --accent-blue: #3498DB;
+    --bg-light: #F5F5F0;
+    --text-dark: #2C3E2F;
+    --white: #FFFFFF;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#app {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--white);
+    min-height: 100vh;
+    box-shadow: var(--shadow);
+}
+
+/* ===== HEADER ===== */
+header {
+    background-color: var(--primary-green);
+    color: var(--white);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+#app-title {
+    color: var(--white);
+    margin: 0;
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#lang-toggle {
+    background-color: var(--secondary-yellow);
+    color: var(--text-dark);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-family: 'Noto Sans', sans-serif;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#lang-toggle:hover {
+    transform: scale(1.05);
+    background-color: #e6b800;
+}
+
+/* ===== LOCATION BAR ===== */
+#location-bar {
+    background: var(--white);
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#current-location-text {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+#manual-location-btn {
+    background: var(--accent-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+/* ===== QUICK ACTIONS ===== */
+#quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--white);
+    border-bottom: 1px solid #ddd;
+}
+
+.action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-light);
+    border: 2px solid var(--primary-green);
+    color: var(--primary-green);
+    padding: 0.8rem 0.3rem;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.action-btn:hover {
+    background: var(--primary-green);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.action-btn .emoji {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.action-btn .label {
+    font-size: 0.8rem;
+}
+
+/* ===== MAP CONTAINER ===== */
+#map-container {
+    height: 350px;
+    width: 100%;
+    background-color: #aadaff;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+/* ===== WEATHER WIDGET ===== */
+#weather-widget {
+    background: linear-gradient(135deg, var(--accent-blue), #2980b9);
+    color: var(--white);
+    padding: 1.2rem;
+    margin: 1rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+#weather-title {
+    color: var(--white);
+    margin-bottom: 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#weather-data {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+}
+
+.weather-item {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.weather-label {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.weather-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* ===== CARDS ===== */
+.card {
+    background: var(--white);
+    padding: 1.2rem;
+    margin: 1rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border-left: 8px solid var(--secondary-yellow);
+}
+
+.card h3 {
+    color: var(--primary-green);
+    margin-bottom: 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card p {
+    margin-bottom: 0.5rem;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.card-buttons button {
+    flex: 1;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+#close-detail {
+    background: #ddd;
+    color: var(--text-dark);
+}
+
+#report-issue-btn {
+    background: var(--secondary-yellow);
+    color: var(--text-dark);
+}
+
+.card-buttons button:hover {
+    opacity: 0.8;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.hidden {
+    display: none !important;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    text-align: center;
+    padding: 1.2rem;
+    font-size: 0.9rem;
+    background: #e0e0d5;
+    margin-top: 1rem;
+}
+
+#sms-fallback {
+    color: var(--text-dark);
+}
+
+/* ===== LOADING STATES ===== */
+.loading {
+    text-align: center;
+    padding: 1rem;
+    color: var(--text-dark);
+}
+
+.error {
+    color: #e74c3c;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (min-width: 768px) {
+    #app {
+        max-width: 800px;
+    }
+    
+    #quick-actions {
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .action-btn {
+        padding: 1.2rem 0.5rem;
+    }
+    
+    .action-btn .emoji {
+        font-size: 2.2rem;
+    }
+    
+    #map-container {
+        height: 400px;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card:not(.hidden) {
+    animation: fadeIn 0.3s ease-out;
+}

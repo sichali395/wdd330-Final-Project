@@ -1,0 +1,28 @@
+{
+  "name": "Village Connect - Malawi",
+  "short_name": "VillageConnect",
+  "description": "Rural Resource Finder for Malawi - WDD330 Final Project",
+  "theme_color": "#1E824C",
+  "background_color": "#F5F5F0",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["navigation", "health", "weather"],
+  "lang": "en",
+  "dir": "ltr"
+}

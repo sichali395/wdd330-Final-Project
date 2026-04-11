@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#1E824C">
+    <link rel="manifest" href="/manifest.json">
+    <title>Village Connect - Malawi</title>
+    
+    <!-- Fonts: Montserrat & Noto Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Our custom styles -->
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header with Language Toggle -->
+        <header>
+            <h1 id="app-title">🌍 Village Connect</h1>
+            <button id="lang-toggle">Chichewa</button>
+        </header>
+
+        <!-- Location Bar -->
+        <div id="location-bar">
+            <span id="current-location-text">📍 Detecting location...</span>
+            <button id="manual-location-btn">Change Village</button>
+        </div>
+
+        <!-- Quick Action Icons -->
+        <nav id="quick-actions">
+            <button class="action-btn" data-type="clinic">
+                <span class="emoji">🏥</span> 
+                <span class="label">Health</span>
+            </button>
+            <button class="action-btn" data-type="water">
+                <span class="emoji">💧</span> 
+                <span class="label">Water</span>
+            </button>
+            <button class="action-btn" data-type="market">
+                <span class="emoji">🛒</span> 
+                <span class="label">Markets</span>
+            </button>
+            <button class="action-btn" data-type="farming">
+                <span class="emoji">🌾</span> 
+                <span class="label">Farming</span>
+            </button>
+        </nav>
+
+        <!-- Map Container -->
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+
+        <!-- Weather Widget -->
+        <div id="weather-widget">
+            <h3 id="weather-title">🌦️ Farming Weather</h3>
+            <div id="weather-data">
+                <p>Loading forecast...</p>
+            </div>
+        </div>
+
+        <!-- Resource Detail Card (Hidden by default) -->
+        <div id="resource-detail" class="card hidden">
+            <h3 id="detail-name">Resource Name</h3>
+            <p id="detail-status">Status: Unknown</p>
+            <p id="detail-distance">Distance: --</p>
+            <div class="card-buttons">
+                <button id="close-detail">Close</button>
+                <button id="report-issue-btn">📝 Report Issue</button>
+            </div>
+        </div>
+        
+        <!-- SMS Fallback Banner -->
+        <footer>
+            <p id="sms-fallback">📱 No smartphone? Text "HELP" to 12345 for info.</p>
+        </footer>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Main Application -->
+    <script type="module" src="/src/app.js"></script>
+</body>
+</html>
