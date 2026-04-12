@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Village Connect</title>
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: #F5F5F0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .offline-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        h1 { color: #1E824C; }
+        .emoji { font-size: 4rem; }
+        button {
+            background: #1E824C;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .cached-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="emoji">📡❌</div>
+        <h1>You're Offline</h1>
+        <p>Village Connect works offline with previously loaded data.</p>
+        <div class="cached-info">
+            <strong>Cached resources available:</strong>
+            <ul style="text-align: left;">
+                <li>Health clinics</li>
+                <li>Water points</li>
+                <li>Market information</li>
+                <li>Weather (last updated)</li>
+            </ul>
+        </div>
+        <button onclick="location.reload()">Try Again</button>
+        <p style="margin-top: 20px; font-size: 0.9rem;">
+            <a href="/">Return to app (if online)</a>
+        </p>
+    </div>
+</body>
+</html>

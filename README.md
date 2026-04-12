@@ -1,18 +1,10 @@
-# WDD330 Final Project - Village Connect
+# Village Connect - WDD330 Final Project
+**Student:** Laston James Sichali
 
-**Student:** Laston James Sichali  
-**Course:** WDD330 - Web Frontend Development II  
-**Project:** Village Connect - Rural Resource Finder  
-**Location:** C:\Users\SOOQ ELASER\Desktop\WDD330-Final-Project
+## Setup
+1. `npm install`
+2. `npm run dev`
+3. Open http://localhost:3000
 
-## 🚀 Quick Start
-
-```bash
-# Navigate to project
-cd "C:\Users\SOOQ ELASER\Desktop\WDD330-Final-Project"
-
-# Install dependencies
-npm install
-
-# Start development
-npm run dev
+## Build
+`npm run build` (outputs to `dist/`)

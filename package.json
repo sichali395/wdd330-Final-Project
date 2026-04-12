@@ -1,23 +1,13 @@
 {
   "name": "wdd330-final-project",
   "version": "1.0.0",
-  "description": "Village Connect - WDD330 Final Project by Laston Sichali",
-  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint src/**/*.js",
-    "format": "prettier --write \"src/**/*.{js,css,html}\""
+    "preview": "vite preview"
   },
-  "keywords": ["malawi", "wdd330", "pwa", "final-project"],
-  "author": "Laston James Sichali",
-  "license": "ISC",
   "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.1.1",
     "vite": "^5.0.10"
   }
 }
