@@ -1,3 +1,4 @@
+// Service Worker for Village Connect - Offline PWA Support
 const CACHE_NAME = 'village-connect-v2';
 const urlsToCache = [
     '/',
@@ -12,13 +13,36 @@ const urlsToCache = [
     'https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans:wght@400;700&display=swap'
 ];
 
+// Install event - cache critical assets
 self.addEventListener('install', event => {
+    console.log('[SW] Installing...');
     event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(urlsToCache))
+            .then(() => self.skipWaiting())
     );
 });
 
+// Activate event - clean old caches
+self.addEventListener('activate', event => {
+    console.log('[SW] Activating...');
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cache => {
+                    if (cache !== CACHE_NAME) {
+                        console.log('[SW] Deleting old cache:', cache);
+                        return caches.delete(cache);
+                    }
+                })
+            );
+        }).then(() => self.clients.claim())
+    );
+});
+
+// Fetch event - cache-first with network fallback
 self.addEventListener('fetch', event => {
+    // Handle OpenStreetMap tiles separately
     if (event.request.url.includes('tile.openstreetmap.org')) {
         event.respondWith(
             caches.match(event.request).then(response => {
@@ -33,6 +57,7 @@ self.addEventListener('fetch', event => {
         return;
     }
     
+    // For navigation requests, return offline page if network fails
     event.respondWith(
         caches.match(event.request).then(response => {
             return response || fetch(event.request).catch(() => {
@@ -40,20 +65,6 @@ self.addEventListener('fetch', event => {
                     return caches.match('/offline.html');
                 }
             });
-        })
-    );
-});
-
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cache => {
-                    if (cache !== CACHE_NAME) {
-                        return caches.delete(cache);
-                    }
-                })
-            );
         })
     );
 });

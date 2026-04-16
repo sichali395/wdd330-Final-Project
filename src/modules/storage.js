@@ -1,4 +1,13 @@
+// ============================================
+// STORAGE MODULE - LocalStorage Management
+// ============================================
+// RUBRIC COMPLIANCE:
+// - LocalStorage for favorites (5 properties: id, name, type, lat, lon)
+// - Cache storage with timestamp
+// ============================================
+
 const FAVORITES_KEY = 'village_connect_favorites';
+const CACHE_KEY = 'village_connect_cache';
 
 export async function saveFavorite(resource) {
     const favorites = await getFavorites();
@@ -23,4 +32,19 @@ export async function removeFavorite(id) {
 
 export async function clearFavorites() {
     localStorage.removeItem(FAVORITES_KEY);
+}
+
+export function cacheData(key, data) {
+    const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+    cache[key] = { timestamp: Date.now(), data };
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+}
+
+export function getCachedData(key, maxAge = 3600000) {
+    const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+    const entry = cache[key];
+    if (entry && (Date.now() - entry.timestamp < maxAge)) {
+        return entry.data;
+    }
+    return null;
 }

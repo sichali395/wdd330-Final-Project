@@ -1,6 +1,17 @@
+// ============================================
+// UI MODULE - Helper Functions
+// ============================================
+
 export function showOfflineBanner() {
-    document.getElementById('offline-banner')?.classList.remove('hidden');
+    const banner = document.getElementById('offline-banner');
+    if (banner) banner.classList.remove('hidden');
 }
+
 export function hideOfflineBanner() {
-    document.getElementById('offline-banner')?.classList.add('hidden');
+    const banner = document.getElementById('offline-banner');
+    if (banner) banner.classList.add('hidden');
+}
+
+export function isOnline() {
+    return navigator.onLine;
 }

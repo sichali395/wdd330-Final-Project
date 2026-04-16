@@ -1,10 +1,11 @@
 # Village Connect - WDD330 Final Project
-**Student:** Laston James Sichali
 
-## Setup
-1. `npm install`
-2. `npm run dev`
-3. Open http://localhost:3000
+**Student:** Laston James Sichali  
+**Course:** WDD330 - Web Frontend Development II  
+**Project:** Rural Resource Finder for Malawi
 
-## Build
-`npm run build` (outputs to `dist/`)
+## 🚀 Quick Start
+
+```bash
+npm install
+npm run dev

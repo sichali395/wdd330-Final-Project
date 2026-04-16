@@ -9,16 +9,13 @@
     <link rel="apple-touch-icon" href="/images/icon-192.png">
     <title>Village Connect - Malawi</title>
     
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Our styles -->
     <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
     <div id="app">
-        <!-- Header -->
+        <!-- Header with Language Toggle and Hamburger Menu -->
         <header>
             <h1 id="app-title">🌍 Village Connect</h1>
             <div class="header-controls">
@@ -27,35 +24,50 @@
             </div>
         </header>
 
-        <!-- Offline Indicator -->
-        <div id="offline-banner" class="offline-banner hidden">
-            ⚠️ You are offline. Showing cached data.
+        <!-- Side Menu Drawer -->
+        <div id="side-menu" class="side-menu hidden">
+            <div class="side-menu-header">
+                <h3>Menu</h3>
+                <button id="close-menu" class="icon-btn" aria-label="Close menu">✕</button>
+            </div>
+            <ul class="side-menu-list">
+                <li><button id="menu-favorites">⭐ Favorites</button></li>
+                <li><button id="menu-market">📅 Market Days</button></li>
+                <li><button id="menu-offline-status">📶 Connection Status</button></li>
+                <li><button id="menu-refresh">⟳ Refresh Location</button></li>
+            </ul>
         </div>
 
-        <!-- Location Bar with Manual Search -->
+        <!-- Offline Indicator -->
+        <div id="offline-banner" class="offline-banner hidden">
+            <span>⚠️</span>
+            <span data-i18n="offline_warning">You are offline. Showing cached data.</span>
+        </div>
+
+        <!-- Location Bar -->
         <div id="location-bar">
             <div id="location-info">
                 <span id="current-location-text">📍 Detecting location...</span>
                 <span id="location-loading" class="loading-spinner hidden"></span>
             </div>
             <div class="location-controls">
-                <button id="manual-location-btn" class="secondary-btn">Change Village</button>
-                <button id="refresh-location-btn" class="icon-btn" title="Refresh location">⟳</button>
+                <button id="manual-location-btn" class="secondary-btn" data-i18n="change_village">Change Village</button>
+                <button id="refresh-location-btn" class="icon-btn" aria-label="Refresh location">⟳</button>
             </div>
         </div>
 
-        <!-- Manual Location Selection Panel (Hidden by default) -->
+        <!-- Manual Location Panel -->
         <div id="manual-location-panel" class="panel hidden">
             <h3 data-i18n="select_location">Select Your Location</h3>
-            <select id="district-select" class="full-width">
+            <select id="district-select" class="full-width" aria-label="Select District">
                 <option value="">-- Select District --</option>
             </select>
-            <select id="village-select" class="full-width" disabled>
+            <select id="village-select" class="full-width" disabled aria-label="Select Village or TA">
                 <option value="">-- Select Village/TA --</option>
             </select>
             <div class="panel-buttons">
-                <button id="apply-location-btn" class="primary-btn">Apply</button>
-                <button id="cancel-location-btn" class="secondary-btn">Cancel</button>
+                <button id="apply-location-btn" class="primary-btn" data-i18n="apply">Apply</button>
+                <button id="cancel-location-btn" class="secondary-btn" data-i18n="cancel">Cancel</button>
             </div>
         </div>
 
@@ -83,32 +95,32 @@
         <div id="map-container">
             <div id="map"></div>
             <div id="map-controls">
-                <button id="zoom-in" title="Zoom in">+</button>
-                <button id="zoom-out" title="Zoom out">−</button>
-                <button id="locate-me" title="Find my location">⌖</button>
+                <button id="zoom-in" aria-label="Zoom in">+</button>
+                <button id="zoom-out" aria-label="Zoom out">−</button>
+                <button id="locate-me" aria-label="Find my location">⌖</button>
             </div>
         </div>
 
         <!-- Resource Filters -->
         <div id="resource-filters" class="filters-bar hidden">
-            <select id="radius-filter">
+            <select id="radius-filter" aria-label="Search radius">
                 <option value="5">Within 5 km</option>
                 <option value="10" selected>Within 10 km</option>
                 <option value="20">Within 20 km</option>
                 <option value="50">Within 50 km</option>
             </select>
-            <select id="status-filter">
+            <select id="status-filter" aria-label="Filter by status">
                 <option value="all">All Status</option>
                 <option value="operational">Operational Only</option>
             </select>
-            <button id="list-view-toggle" class="icon-btn" title="List view">📋</button>
+            <button id="list-view-toggle" class="icon-btn" aria-label="List view">📋</button>
         </div>
 
         <!-- Weather Widget -->
         <div id="weather-widget" class="card">
             <div class="card-header">
                 <h3 data-i18n="farming_weather">🌦️ Farming Weather</h3>
-                <button id="weather-details-toggle" class="icon-btn">▼</button>
+                <button id="weather-details-toggle" class="icon-btn" aria-label="Toggle weather details">▼</button>
             </div>
             <div id="weather-summary" class="weather-summary"></div>
             <div id="weather-details" class="weather-details hidden">
@@ -121,7 +133,7 @@
         <div id="resource-list-view" class="panel hidden">
             <div class="panel-header">
                 <h3 id="list-title">Nearby Resources</h3>
-                <button id="close-list-view" class="icon-btn">✕</button>
+                <button id="close-list-view" class="icon-btn" aria-label="Close list view">✕</button>
             </div>
             <div id="resource-list-container" class="list-container"></div>
         </div>
@@ -129,7 +141,7 @@
         <!-- Resource Detail Modal -->
         <div id="resource-detail" class="modal hidden">
             <div class="modal-content card">
-                <button id="close-detail" class="close-btn">✕</button>
+                <button id="close-detail" class="close-btn" aria-label="Close details">✕</button>
                 <h3 id="detail-name">Resource Name</h3>
                 <div class="detail-section">
                     <span class="detail-label" data-i18n="type">Type:</span>
@@ -166,12 +178,12 @@
         <!-- Report Issue Modal -->
         <div id="report-modal" class="modal hidden">
             <div class="modal-content card">
-                <button id="close-report" class="close-btn">✕</button>
+                <button id="close-report" class="close-btn" aria-label="Close report form">✕</button>
                 <h3 data-i18n="report_issue_title">Report an Issue</h3>
                 <form id="report-form">
                     <input type="hidden" id="report-resource-id">
                     <label for="report-type">Issue Type:</label>
-                    <select id="report-type" required>
+                    <select id="report-type" required aria-label="Issue type">
                         <option value="">-- Select --</option>
                         <option value="closed">Facility Closed</option>
                         <option value="broken">Equipment Broken</option>
@@ -179,7 +191,7 @@
                         <option value="other">Other</option>
                     </select>
                     <label for="report-description">Description (optional):</label>
-                    <textarea id="report-description" rows="3"></textarea>
+                    <textarea id="report-description" rows="3" aria-label="Issue description"></textarea>
                     <div class="form-buttons">
                         <button type="submit" class="primary-btn">Submit Report</button>
                         <button type="button" id="cancel-report" class="secondary-btn">Cancel</button>
@@ -192,10 +204,10 @@
         <div id="market-calendar" class="card">
             <div class="card-header">
                 <h3 data-i18n="market_days">📅 Market Days</h3>
-                <button id="calendar-toggle" class="icon-btn">▼</button>
+                <button id="calendar-toggle" class="icon-btn" aria-label="Toggle calendar">▼</button>
             </div>
             <div id="calendar-content" class="calendar-content">
-                <select id="market-district-select" class="full-width">
+                <select id="market-district-select" class="full-width" aria-label="Select district for market days">
                     <option value="">Select District</option>
                 </select>
                 <div id="market-schedule"></div>
@@ -206,14 +218,14 @@
         <div id="favorites-section" class="card">
             <div class="card-header">
                 <h3 data-i18n="saved_locations">⭐ Saved Locations</h3>
-                <button id="clear-favorites" class="icon-btn" title="Clear all">🗑️</button>
+                <button id="clear-favorites" class="icon-btn" aria-label="Clear all favorites">🗑️</button>
             </div>
             <div id="favorites-list" class="favorites-list">
                 <p class="empty-message" data-i18n="no_favorites">No saved locations yet.</p>
             </div>
         </div>
 
-        <!-- SMS Fallback Banner -->
+        <!-- Footer -->
         <footer>
             <div id="sms-fallback" class="sms-banner">
                 <p data-i18n="sms_fallback">📱 No smartphone? Text "HELP" to <strong>+265 999 123 456</strong> for info via SMS.</p>
@@ -222,9 +234,7 @@
         </footer>
     </div>
 
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Main App -->
     <script type="module" src="/src/app.js"></script>
 </body>
 </html>

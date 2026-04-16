@@ -1,9 +1,17 @@
+// ============================================
+// PWA MODULE - Service Worker Registration
+// ============================================
+
 export function registerSW() {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
-                .then(reg => console.log('SW registered:', reg.scope))
-                .catch(err => console.log('SW registration failed:', err));
+                .then(registration => {
+                    console.log('[PWA] Service Worker registered:', registration.scope);
+                })
+                .catch(error => {
+                    console.log('[PWA] Service Worker registration failed:', error);
+                });
         });
     }
 }
