@@ -5,19 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#1E824C">
     <meta name="description" content="Village Connect - Find health clinics, water points, markets, and farming weather in rural Malawi">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
     <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/images/icon-192.png">
+    
     <title>Village Connect - Malawi</title>
     
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Main styles -->
     <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
     <div id="app">
-        <!-- Header with Language Toggle and Hamburger Menu -->
+        <!-- Header with Malawi Flag Logo -->
         <header>
-            <h1 id="app-title">🌍 Village Connect</h1>
+            <div class="logo-container">
+                <div class="malawi-flag-logo">
+                    <div class="flag-stripe flag-black"></div>
+                    <div class="flag-stripe flag-red">
+                        <div class="rising-sun">
+                            <div class="sun-core"></div>
+                        </div>
+                    </div>
+                    <div class="flag-stripe flag-green"></div>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-village">VILLAGE</span>
+                    <span class="logo-connect">CONNECT</span>
+                </div>
+            </div>
             <div class="header-controls">
                 <button id="lang-toggle" aria-label="Switch language">Chichewa</button>
                 <button id="menu-toggle" class="icon-btn" aria-label="Menu">☰</button>
@@ -181,22 +202,30 @@
                 <button id="close-report" class="close-btn" aria-label="Close report form">✕</button>
                 <h3 data-i18n="report_issue_title">Report an Issue</h3>
                 <form id="report-form">
-                    <input type="hidden" id="report-resource-id">
-                    <label for="report-type">Issue Type:</label>
-                    <select id="report-type" required aria-label="Issue type">
-                        <option value="">-- Select --</option>
-                        <option value="closed">Facility Closed</option>
-                        <option value="broken">Equipment Broken</option>
-                        <option value="moved">Location Changed</option>
-                        <option value="other">Other</option>
-                    </select>
-                    <label for="report-description">Description (optional):</label>
-                    <textarea id="report-description" rows="3" aria-label="Issue description"></textarea>
+                    <input type="hidden" id="report-resource-id" name="resourceId">
+                    <input type="hidden" id="report-resource-name" name="resourceName">
+                    <div class="form-group">
+                        <label for="report-type">Issue Type:</label>
+                        <select id="report-type" name="issueType" required aria-label="Issue type">
+                            <option value="">-- Select --</option>
+                            <option value="closed">🚫 Facility Closed</option>
+                            <option value="broken">🔧 Equipment Broken</option>
+                            <option value="moved">📍 Location Changed</option>
+                            <option value="other">📋 Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="report-description">Description (optional):</label>
+                        <textarea id="report-description" name="description" rows="4" placeholder="Please provide details about the issue..."></textarea>
+                    </div>
                     <div class="form-buttons">
-                        <button type="submit" class="primary-btn">Submit Report</button>
+                        <button type="submit" class="primary-btn">📤 Submit Report</button>
                         <button type="button" id="cancel-report" class="secondary-btn">Cancel</button>
                     </div>
                 </form>
+                <div id="report-success-message" class="success-message hidden">
+                    ✅ Thank you for your report! This helps keep our community informed.
+                </div>
             </div>
         </div>
 
@@ -234,7 +263,9 @@
         </footer>
     </div>
 
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Main App -->
     <script type="module" src="/src/app.js"></script>
 </body>
 </html>

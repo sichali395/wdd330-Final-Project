@@ -262,10 +262,14 @@ function getIconForType(type) {
     return icons[type] || '📍';
 }
 
-// ===== RESOURCE DETAIL MODAL =====
+// ===== RESOURCE DETAIL MODAL (UPDATED) =====
 function showResourceDetail(resource) {
     const modal = document.getElementById('resource-detail');
-    document.getElementById('detail-name').textContent = resource.tags?.name || 'Unnamed';
+    
+    // Store current resource globally for report and directions
+    window.currentDetailResource = resource;
+    
+    document.getElementById('detail-name').textContent = resource.tags?.name || resource.name || 'Unnamed';
     document.getElementById('detail-type').textContent = translatePage(resource.type);
     document.getElementById('detail-status').textContent = getResourceStatus(resource) === 'operational' ? translatePage('operational') : translatePage('non_operational');
     
@@ -275,10 +279,14 @@ function showResourceDetail(resource) {
     document.getElementById('detail-contact').textContent = resource.tags?.phone || resource.tags?.contact_phone || 'Not available';
     document.getElementById('detail-services').textContent = resource.tags?.healthcare || resource.tags?.description || 'General services';
     
+    // Set hidden fields for report form
     document.getElementById('report-resource-id').value = resource.id;
+    document.getElementById('report-resource-name').value = resource.tags?.name || resource.name || 'Unnamed';
+    
+    // Set favorite button data
     document.getElementById('save-favorite-btn').dataset.resource = JSON.stringify({
         id: resource.id,
-        name: resource.tags?.name,
+        name: resource.tags?.name || resource.name,
         type: resource.type,
         lat: resource.lat,
         lon: resource.lon
@@ -374,12 +382,6 @@ function setupEventListeners() {
     document.getElementById('close-detail').addEventListener('click', () => {
         document.getElementById('resource-detail').classList.add('hidden');
     });
-    document.getElementById('get-directions-btn').addEventListener('click', () => {
-        if (currentResources.length > 0) {
-            const r = currentResources[0];
-            window.open(`https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lon}`, '_blank');
-        }
-    });
     
     // 7. Click event - Save favorite (LocalStorage)
     document.getElementById('save-favorite-btn').addEventListener('click', async (e) => {
@@ -391,13 +393,32 @@ function setupEventListeners() {
         }
     });
     
-    // 8. Click event - Report issue button
+    // 8. Click event - Report issue button (UPDATED)
     document.getElementById('report-issue-btn').addEventListener('click', () => {
+        // Hide resource detail modal
         document.getElementById('resource-detail').classList.add('hidden');
-        document.getElementById('report-modal').classList.remove('hidden');
+        
+        // Show report modal
+        const reportModal = document.getElementById('report-modal');
+        const successMessage = document.getElementById('report-success-message');
+        const reportForm = document.getElementById('report-form');
+        
+        // Reset form and hide success message
+        reportForm.reset();
+        successMessage.classList.add('hidden');
+        reportForm.classList.remove('hidden');
+        
+        // Pre-fill resource info if available
+        if (window.currentDetailResource) {
+            document.getElementById('report-resource-id').value = window.currentDetailResource.id;
+            document.getElementById('report-resource-name').value = 
+                window.currentDetailResource.tags?.name || window.currentDetailResource.name || 'Unnamed';
+        }
+        
+        reportModal.classList.remove('hidden');
     });
     
-    // 9. Click events - Report modal
+    // 9. Click events - Report modal close
     document.getElementById('close-report').addEventListener('click', () => {
         document.getElementById('report-modal').classList.add('hidden');
     });
@@ -405,19 +426,62 @@ function setupEventListeners() {
         document.getElementById('report-modal').classList.add('hidden');
     });
     
-    // 10. Submit event - Report form
+    // 10. Submit event - Report form (UPDATED)
     document.getElementById('report-form').addEventListener('submit', async (e) => {
         e.preventDefault();
+        
         const resourceId = document.getElementById('report-resource-id').value;
-        const type = document.getElementById('report-type').value;
+        const resourceName = document.getElementById('report-resource-name').value;
+        const issueType = document.getElementById('report-type').value;
         const description = document.getElementById('report-description').value;
-        await submitReport(resourceId, type, description);
-        alert(translatePage('thanks_report'));
-        document.getElementById('report-modal').classList.add('hidden');
-        e.target.reset();
+        
+        if (!resourceId) {
+            alert('Error: No resource selected.');
+            return;
+        }
+        
+        if (!issueType) {
+            alert('Please select an issue type.');
+            return;
+        }
+        
+        // Submit report to localStorage
+        await submitReport(resourceId, issueType, description);
+        
+        // Show success message
+        const reportForm = document.getElementById('report-form');
+        const successMessage = document.getElementById('report-success-message');
+        
+        reportForm.classList.add('hidden');
+        successMessage.classList.remove('hidden');
+        
+        // Log for debugging
+        console.log('Report submitted:', { resourceId, resourceName, issueType, description });
+        
+        // Auto-close after 2.5 seconds
+        setTimeout(() => {
+            document.getElementById('report-modal').classList.add('hidden');
+            // Reset for next time
+            reportForm.classList.remove('hidden');
+            successMessage.classList.add('hidden');
+            reportForm.reset();
+        }, 2500);
     });
     
-    // 11. Click event - List view toggle
+    // 11. Click event - Get directions button (UPDATED)
+    document.getElementById('get-directions-btn').addEventListener('click', () => {
+        if (window.currentDetailResource) {
+            const r = window.currentDetailResource;
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lon}`, '_blank');
+        } else if (currentResources.length > 0) {
+            const r = currentResources[0];
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lon}`, '_blank');
+        } else {
+            alert('No resource selected.');
+        }
+    });
+    
+    // 12. Click event - List view toggle
     document.getElementById('list-view-toggle').addEventListener('click', () => {
         document.getElementById('resource-list-view').classList.remove('hidden');
     });
@@ -425,27 +489,27 @@ function setupEventListeners() {
         document.getElementById('resource-list-view').classList.add('hidden');
     });
     
-    // 12. Change event - Radius filter
+    // 13. Change event - Radius filter
     document.getElementById('radius-filter').addEventListener('change', (e) => {
         if (currentResourceType) searchResources(currentResourceType, parseInt(e.target.value));
     });
     
-    // 13. Click event - Weather details toggle
+    // 14. Click event - Weather details toggle
     document.getElementById('weather-details-toggle').addEventListener('click', () => {
         document.getElementById('weather-details').classList.toggle('hidden');
     });
     
-    // 14. Click event - Market calendar toggle
+    // 15. Click event - Market calendar toggle
     document.getElementById('calendar-toggle').addEventListener('click', () => {
         document.getElementById('calendar-content').classList.toggle('hidden');
     });
     
-    // 15. Change event - Market district select
+    // 16. Change event - Market district select
     document.getElementById('market-district-select').addEventListener('change', (e) => {
         displayMarketSchedule(e.target.value);
     });
     
-    // 16. Click event - Clear favorites
+    // 17. Click event - Clear favorites
     document.getElementById('clear-favorites').addEventListener('click', async () => {
         if (confirm('Clear all saved locations?')) {
             await clearFavorites();
